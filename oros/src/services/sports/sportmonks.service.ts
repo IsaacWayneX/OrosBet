@@ -109,13 +109,20 @@ export class SportmonksService implements SportsProvider {
 
   private transformFixture(fixture: any): LiveFixture {
     const participants = fixture.participants || [];
-    const homeTeam = participants.find((p: any) => p.meta?.location === "home")?.name || "Home";
-    const awayTeam = participants.find((p: any) => p.meta?.location === "away")?.name || "Away";
+    const homeParticipant = participants.find((p: any) => p.meta?.location === "home");
+    const awayParticipant = participants.find((p: any) => p.meta?.location === "away");
+    
+    const homeTeam = homeParticipant?.name || "Home";
+    const awayTeam = awayParticipant?.name || "Away";
+    const homeLogo = homeParticipant?.image_path || undefined;
+    const awayLogo = awayParticipant?.image_path || undefined;
 
     return {
       id: String(fixture.id),
       home_team: homeTeam,
+      home_logo: homeLogo,
       away_team: awayTeam,
+      away_logo: awayLogo,
       status: this.getStatusFromState(fixture.state_id),
       started_at: fixture.starting_at,
     };
@@ -123,8 +130,13 @@ export class SportmonksService implements SportsProvider {
 
   private transformMatchState(fixture: any): MatchState {
     const participants = fixture.participants || [];
-    const homeTeam = participants.find((p: any) => p.meta?.location === "home")?.name || "Home";
-    const awayTeam = participants.find((p: any) => p.meta?.location === "away")?.name || "Away";
+    const homeParticipant = participants.find((p: any) => p.meta?.location === "home");
+    const awayParticipant = participants.find((p: any) => p.meta?.location === "away");
+    
+    const homeTeam = homeParticipant?.name || "Home";
+    const awayTeam = awayParticipant?.name || "Away";
+    const homeLogo = homeParticipant?.image_path || undefined;
+    const awayLogo = awayParticipant?.image_path || undefined;
 
     const scores = fixture.scores || [];
     const homeScore = scores.find((s: any) => s.description === "home")?.score || 0;
@@ -133,7 +145,9 @@ export class SportmonksService implements SportsProvider {
     return {
       match_id: String(fixture.id),
       home_team: homeTeam,
+      home_logo: homeLogo,
       away_team: awayTeam,
+      away_logo: awayLogo,
       status: this.getStatusFromState(fixture.state_id),
       minute: this.getMinuteFromState(fixture.state_id),
       home_score: homeScore,

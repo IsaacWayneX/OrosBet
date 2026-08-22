@@ -6,7 +6,9 @@
 export interface LiveFixture {
   id: string;
   home_team: string;
+  home_logo?: string;
   away_team: string;
+  away_logo?: string;
   status: "scheduled" | "live" | "finished";
   started_at?: string;
 }
@@ -14,7 +16,9 @@ export interface LiveFixture {
 export interface MatchState {
   match_id: string;
   home_team: string;
+  home_logo?: string;
   away_team: string;
+  away_logo?: string;
   status: "scheduled" | "live" | "finished";
   minute: number | null;
   home_score: number;

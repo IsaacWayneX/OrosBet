@@ -39,7 +39,9 @@ export class MockSportsService implements SportsProvider {
       {
         id: "mock-arsenal-barcelona",
         home_team: "Arsenal",
+        home_logo: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100&h=100&fit=crop",
         away_team: "Barcelona",
+        away_logo: "https://images.unsplash.com/photo-1540747737956-37870304797a?w=100&h=100&fit=crop",
         status: "live",
         started_at: new Date(Date.now() - 68 * 60 * 1000).toISOString(),
       },
@@ -51,14 +53,18 @@ export class MockSportsService implements SportsProvider {
       {
         id: "mock-real-madrid-manchester",
         home_team: "Real Madrid",
+        home_logo: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100&h=100&fit=crop",
         away_team: "Manchester City",
+        away_logo: "https://images.unsplash.com/photo-1540747737956-37870304797a?w=100&h=100&fit=crop",
         status: "scheduled",
         started_at: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
       },
       {
         id: "mock-bayern-psg",
         home_team: "Bayern Munich",
+        home_logo: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100&h=100&fit=crop",
         away_team: "Paris Saint-Germain",
+        away_logo: "https://images.unsplash.com/photo-1540747737956-37870304797a?w=100&h=100&fit=crop",
         status: "scheduled",
         started_at: new Date(Date.now() + 5 * 60 * 60 * 1000).toISOString(),
       },
@@ -70,7 +76,9 @@ export class MockSportsService implements SportsProvider {
       return {
         match_id: matchId,
         home_team: "Arsenal",
+        home_logo: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100&h=100&fit=crop",
         away_team: "Barcelona",
+        away_logo: "https://images.unsplash.com/photo-1540747737956-37870304797a?w=100&h=100&fit=crop",
         status: "live",
         minute: 68,
         home_score: 1,
