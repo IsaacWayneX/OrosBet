@@ -1,0 +1,17 @@
+{
+  "name": "oros-contracts",
+  "version": "1.0.0",
+  "description": "Oros smart contracts deployment",
+  "main": "deploy.js",
+  "scripts": {
+    "deploy": "node deploy.js",
+    "compile": "solc --optimize --bin --abi src/OrosUSD.sol src/OrosMarket.sol"
+  },
+  "dependencies": {
+    "ethers": "^6.11.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "solc": "^0.8.20"
+  }
+}
