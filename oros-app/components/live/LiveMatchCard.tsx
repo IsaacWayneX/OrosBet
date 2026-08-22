@@ -11,14 +11,14 @@ interface LiveMatchCardProps {
 
 export function LiveMatchCard({ match, className }: LiveMatchCardProps) {
   return (
-    <div className={cn("flex flex-col overflow-hidden rounded-lg bg-card shadow-lg", className)}>
+    <div className={cn("flex flex-col overflow-hidden rounded-lg bg-card", className)}>
       
       {/* Top Section: Header & Matchup */}
       <div className="flex h-[101px] flex-col justify-between p-4 bg-card">
         {/* Status bar */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="flex h-4 items-center justify-center rounded bg-border px-1.5 text-[12px] font-bold text-white uppercase">
+            <span className="flex h-4 items-center justify-center rounded bg-accent px-1.5 text-[12px] font-bold text-white uppercase">
               {match.status === "live" ? (match.minute ? `${match.minute}'` : "LIVE") : timeFromNow(match.startedAt || "")}
             </span>
             <div className="flex items-center gap-2">
@@ -76,17 +76,17 @@ export function LiveMatchCard({ match, className }: LiveMatchCardProps) {
         <div className="mt-auto flex flex-col gap-2">
           <div className="flex h-14 w-full items-center gap-2">
             {/* 1x2 Buttons */}
-            <button className="flex flex-1 flex-col items-center justify-center rounded-lg bg-black/30 py-2 transition hover:bg-black/40">
-              <span className="text-[14px] text-foreground opacity-80">{match.homeTeam.slice(0, 8)}</span>
-              <span className="text-[14px] font-bold text-accent-secondary">8.40</span>
+            <button className="flex flex-1 flex-col items-center justify-center rounded-lg bg-accent text-white py-2 transition hover:opacity-90">
+              <span className="text-[14px] opacity-90">{match.homeTeam.slice(0, 8)}</span>
+              <span className="text-[14px] font-bold">8.40</span>
             </button>
-            <button className="flex flex-1 flex-col items-center justify-center rounded-lg bg-black/30 py-2 transition hover:bg-black/40">
-              <span className="text-[14px] text-foreground opacity-80">Draw</span>
-              <span className="text-[14px] font-bold text-accent-secondary">5.60</span>
+            <button className="flex flex-1 flex-col items-center justify-center rounded-lg bg-accent text-white py-2 transition hover:opacity-90">
+              <span className="text-[14px] opacity-90">Draw</span>
+              <span className="text-[14px] font-bold">5.60</span>
             </button>
-            <button className="flex flex-1 flex-col items-center justify-center rounded-lg bg-black/30 py-2 transition hover:bg-black/40">
-              <span className="text-[14px] text-foreground opacity-80">{match.awayTeam.slice(0, 8)}</span>
-              <span className="text-[14px] font-bold text-accent-secondary">1.35</span>
+            <button className="flex flex-1 flex-col items-center justify-center rounded-lg bg-accent text-white py-2 transition hover:opacity-90">
+              <span className="text-[14px] opacity-90">{match.awayTeam.slice(0, 8)}</span>
+              <span className="text-[14px] font-bold">1.35</span>
             </button>
           </div>
         </div>

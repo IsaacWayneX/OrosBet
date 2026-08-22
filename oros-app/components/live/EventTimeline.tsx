@@ -56,7 +56,7 @@ export function EventTimeline({ events = [] }: { events?: MatchEvent[] }) {
                     <span className="text-[13px] font-bold text-accent-secondary tracking-wide uppercase">
                       {event.team}
                     </span>
-                    <span className="px-1.5 py-0.5 rounded bg-black/20 text-[10px] font-semibold uppercase tracking-wider text-slate-300">
+                    <span className="px-1.5 py-0.5 rounded bg-accent text-white dark:bg-black/20 dark:text-slate-300 text-[10px] font-semibold uppercase tracking-wider">
                       {event.type}
                     </span>
                     {event.result && (
@@ -72,7 +72,7 @@ export function EventTimeline({ events = [] }: { events?: MatchEvent[] }) {
               </div>
               
               <div className="flex-shrink-0 text-right">
-                <span className="text-[13px] font-bold text-slate-400 bg-black/10 dark:bg-white/5 px-2 py-1 rounded font-mono">
+                <span className="text-[13px] font-bold bg-accent text-white dark:bg-white/5 dark:text-slate-400 px-2 py-1 rounded font-mono">
                   {event.minute}&apos;
                 </span>
               </div>

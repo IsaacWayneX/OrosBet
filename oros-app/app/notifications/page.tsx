@@ -5,7 +5,7 @@ const activities = [
   { id: 2, label: "Claimed faucet balance", status: "confirmed", time: "1h ago" },
 ];
 
-export default function ActivityPage() {
+export default function NotificationsPage() {
   return (
     <div className="space-y-6">
       <div>

@@ -7,14 +7,22 @@
   --background-elevated: #FFFFFF;
   --background-button: #EBF2F7;
   --card: #FFFFFF;
-  --foreground: #0E202D;
-  --muted: #6C8CA3;
+  --foreground: #000000;
+  --muted: #000000;
   --border: #E2E8F0;
   --accent: #1475E1;
   --accent-secondary: #005FCE;
   --danger: #CA0D3D;
   --warning: #E38800;
   --success: #26A17B;
+
+  /* Force slate text colors to black in light mode */
+  --slate-50: #000000;
+  --slate-100: #000000;
+  --slate-200: #000000;
+  --slate-300: #000000;
+  --slate-400: #000000;
+  --slate-500: #000000;
 }
 
 .dark {
@@ -32,6 +40,14 @@
   --danger: #CA0D3D;
   --warning: #E38800;
   --success: #26A17B;
+
+  /* Standard slate colors in dark mode */
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
 }
 
 @theme inline {
@@ -50,6 +66,14 @@
   --color-success: var(--success);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Map theme colors to variable overrides */
+  --color-slate-50: var(--slate-50);
+  --color-slate-100: var(--slate-100);
+  --color-slate-200: var(--slate-200);
+  --color-slate-300: var(--slate-300);
+  --color-slate-400: var(--slate-400);
+  --color-slate-500: var(--slate-500);
 }
 
 .logo-filter {

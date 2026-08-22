@@ -8,56 +8,11 @@ import type {
   Position,
 } from "@/types";
 
-const fallbackMatches: Match[] = [
-  {
-    id: "mock-arsenal-barcelona",
-    homeTeam: "Arsenal",
-    awayTeam: "Barcelona",
-    status: "live",
-    homeScore: 1,
-    awayScore: 1,
-    minute: 68,
-    league: "Featured",
-    startedAt: new Date(Date.now() - 68 * 60 * 1000).toISOString(),
-    events: [
-      {
-        id: "mock-1",
-        minute: 68,
-        team: "Arsenal",
-        type: "dangerous_attack",
-        commentary: "Saka wins a corner after a sharp run.",
-      },
-    ],
-  },
-];
+const fallbackMatches: Match[] = [];
 
-const fallbackMarkets: Market[] = [
-  {
-    id: "market-demo-1",
-    matchId: "mock-arsenal-barcelona",
-    title: "Will Arsenal score next?",
-    description: "Live binary market linked to current match momentum.",
-    outcomeYesPrice: 0.62,
-    outcomeNoPrice: 0.38,
-    probabilityYes: 62,
-    probabilityNo: 38,
-    volume: 18240,
-    liquidity: 50000,
-    status: "open",
-    resolutionDeadline: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
-  },
-];
+const fallbackMarkets: Market[] = [];
 
-const fallbackNotifications: NotificationItem[] = [
-  {
-    id: "notif-1",
-    title: "Connected to backend",
-    body: "This app now attempts to consume Express APIs and falls back gracefully when data is missing.",
-    createdAt: new Date().toISOString(),
-    read: false,
-    kind: "system",
-  },
-];
+const fallbackNotifications: NotificationItem[] = [];
 
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${BACKEND_URL}${path}`, {
@@ -195,9 +150,43 @@ export async function getMatches(): Promise<Match[]> {
     ]);
 
     const merged = [...(live.fixtures || []), ...(upcoming.fixtures || [])].map(normalizeFixture);
-    return merged.length > 0 ? merged : fallbackMatches;
+    return merged.length > 0 ? merged : [];
   } catch {
-    return fallbackMatches;
+    return [];
+  }
+}
+
+export async function getLiveMatches(): Promise<Match[]> {
+  try {
+    const data = await requestJson<{ fixtures: any[] }>("/api/v1/livegames");
+    const matches = (data.fixtures || []).map(normalizeFixture).filter(m => m.status === "live");
+    return matches.length > 0 ? matches : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function getUpcomingMatches(): Promise<Match[]> {
+  try {
+    const data = await requestJson<{ fixtures: any[] }>("/api/v1/livegames/upcoming");
+    const matches = (data.fixtures || []).map(normalizeFixture);
+    return matches.length > 0 ? matches : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function getLeagues(): Promise<any[]> {
+  try {
+    const data = await requestJson<{ leagues: any[] }>("/api/v1/fixtures-by-league/leagues");
+    return data.leagues || [];
+  } catch {
+    return [
+      { id: 8, name: "Premier League", country: "England" },
+      { id: 82, name: "La Liga", country: "Spain" },
+      { id: 109, name: "Serie A", country: "Italy" },
+      { id: 2, name: "Champions League", country: "Europe" },
+    ];
   }
 }
 
@@ -215,9 +204,9 @@ export async function getMarkets(): Promise<Market[]> {
   try {
     const data = await requestJson<{ markets: any[] }>("/api/v1/markets");
     const markets = (data.markets || []).map(normalizeMarket);
-    return markets.length > 0 ? markets : fallbackMarkets;
+    return markets.length > 0 ? markets : [];
   } catch {
-    return fallbackMarkets;
+    return [];
   }
 }
 
@@ -332,5 +321,5 @@ export async function getNotifications(): Promise<NotificationItem[]> {
   }));
 
   const combined = [...matchNotifications, ...marketNotifications];
-  return combined.length > 0 ? combined : fallbackNotifications;
+  return combined.length > 0 ? combined : [];
 }
