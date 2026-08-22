@@ -26,17 +26,15 @@ export default function RootLayout({ children }: Readonly<{ children: import("re
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <div className="min-h-screen bg-background w-screen overflow-x-hidden">
+        <div className="min-h-screen bg-background">
           <Navbar />
-          <div className="flex w-screen overflow-x-hidden">
-            <Suspense fallback={<aside className="fixed left-0 top-[60px] hidden h-[calc(100vh-60px)] w-[260px] bg-background-sidebar border-r border-border/40 lg:flex" />}>
-              <Sidebar />
-            </Suspense>
-            <div className="page-shell flex min-h-[calc(100vh-60px)] flex-1 lg:pl-0">
-              <main className="flex-1 px-4 py-6 lg:px-8 w-full">
-                {children}
-              </main>
-            </div>
+          <Suspense fallback={<aside className="fixed left-0 top-[60px] hidden h-[calc(100vh-60px)] w-[260px] bg-background-sidebar border-r border-border/40 lg:flex" />}>
+            <Sidebar />
+          </Suspense>
+          <div className="page-shell flex min-h-[calc(100vh-60px)] lg:pl-[260px]">
+            <main className="flex-1 px-4 py-6 lg:px-8">
+              {children}
+            </main>
           </div>
           <MobileNav />
           <ActivityModal />

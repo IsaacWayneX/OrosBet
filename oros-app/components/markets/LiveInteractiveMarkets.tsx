@@ -113,7 +113,7 @@ export function LiveInteractiveMarkets({
           {activeMarkets.slice(0, 8).map((market: any) => {
             const timeLeft = timeRemaining[market.id] || 0;
             return (
-              <Card key={market.id} className="p-4 border border-neutral-200">
+              <Card key={market.id} className="p-4">
                 <div className="space-y-3">
                   {/* Market Title */}
                   <div>
@@ -136,7 +136,7 @@ export function LiveInteractiveMarkets({
                     <button 
                       onClick={() => handlePlaceBet(market, "yes")}
                       disabled={!wallet.connected || timeLeft === 0}
-                      className="w-full px-3 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-500/50 disabled:cursor-not-allowed transition text-white border border-emerald-600"
+                      className="w-full px-3 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-500/50 disabled:cursor-not-allowed transition text-white"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex flex-col">
@@ -158,7 +158,7 @@ export function LiveInteractiveMarkets({
                     <button 
                       onClick={() => handlePlaceBet(market, "no")}
                       disabled={!wallet.connected || timeLeft === 0}
-                      className="w-full px-3 py-2 rounded-lg bg-rose-500 hover:bg-rose-600 disabled:bg-rose-500/50 disabled:cursor-not-allowed transition text-white border border-rose-600"
+                      className="w-full px-3 py-2 rounded-lg bg-rose-500 hover:bg-rose-600 disabled:bg-rose-500/50 disabled:cursor-not-allowed transition text-white"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex flex-col">
