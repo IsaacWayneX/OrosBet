@@ -22,6 +22,48 @@ export const listMarkets = async (req: Request, res: Response) => {
   }
 };
 
+export const placeBet = async (req: Request, res: Response) => {
+  try {
+    const { marketId, outcomeId, amount, userAddress } = req.body;
+
+    // Validate inputs
+    if (!marketId || outcomeId === undefined || !amount || !userAddress) {
+      return res.status(400).json({
+        error: "Missing required fields: marketId, outcomeId, amount, userAddress",
+      });
+    }
+
+    if (outcomeId !== 0 && outcomeId !== 1) {
+      return res.status(400).json({ error: "outcomeId must be 0 or 1" });
+    }
+
+    if (isNaN(parseInt(amount)) || parseInt(amount) <= 0) {
+      return res.status(400).json({ error: "amount must be a positive number" });
+    }
+
+    // Place bet via blockchain
+    const txHash = await blockchainService.placeBet(
+      parseInt(marketId),
+      outcomeId,
+      amount,
+      userAddress
+    );
+
+    res.json({
+      success: true,
+      marketId,
+      outcomeId,
+      amount,
+      userAddress,
+      txHash,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error("[placeBet] Error:", error);
+    res.status(500).json({ error: "Failed to place bet" });
+  }
+};
+
 export const createMarket = async (req: Request, res: Response) => {
   try {
     const { description, outcomes, resolutionDeadline, initialLiquidity } = req.body;
