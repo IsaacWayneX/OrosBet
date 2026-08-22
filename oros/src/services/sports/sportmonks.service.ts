@@ -9,7 +9,6 @@ import { SportsProvider, LiveFixture, MatchState, MatchEvent } from "./provider.
 export class SportmonksService implements SportsProvider {
   readonly name = "sportmonks";
   private client: AxiosInstance;
-  private lastEventIds: Map<string, number> = new Map();
   private pendingDetailRequests = new Map<string, Promise<any>>();
   private cachedEvents = new Map<string, MatchEvent[]>();
 
@@ -229,48 +228,7 @@ export class SportmonksService implements SportsProvider {
     };
   }
 
-  private transformEvent(event: any, matchId: string): MatchEvent {
-    const typeMap: Record<string, string> = {
-      goal: "goal",
-      card: "card",
-      substitution: "substitution",
-      corner: "corner",
-      injury_clearance: "injury_clearance",
-      tackle: "tackle",
-      interception: "interception",
-      turnover: "turnover",
-      foul_committed: "foul_committed",
-      clearance: "clearance",
-      chance_missed: "chance_missed",
-      ball_recovery: "ball_recovery",
-      dispossessed: "dispossessed",
-      error: "error",
-      keeper_pick_up: "keeper_pick_up",
-      cross_not_claimed: "cross_not_claimed",
-      smother: "smother",
-      offside_provoked: "offside_provoked",
-      shield_ball_opp: "shield_ball_opp",
-      foul_throw_in: "foul_throw_in",
-      penalty_faced: "penalty_faced",
-      keeper_sweeper: "keeper_sweeper",
-      chance_created: "chance_created",
-      punch: "punch",
-      good_skill: "good_skill",
-      deleted_event: "deleted_event",
-      aerial: "aerial",
-      challenge: "challenge",
-    };
 
-    return {
-      id: String(event.id),
-      match_id: matchId,
-      minute: event.minute || 0,
-      team: event.team?.name || "Unknown",
-      type: typeMap[event.type] || event.type,
-      description: event.type,
-      commentary: `${event.player?.name || "Event"}: ${event.type}`,
-    };
-  }
 
   private getStatusFromState(stateId: number): "scheduled" | "live" | "finished" {
     if (stateId === 1) return "scheduled";
