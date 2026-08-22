@@ -117,13 +117,28 @@ function normalizeMatchDetail(match: any, events: any[] = []): Match {
     homeScore: safeNumber(match.home_score),
     awayScore: safeNumber(match.away_score),
     minute: match.minute ?? null,
-    league: match.league || "Featured",
+    league: match.league?.name || match.league || "Featured",
+    leagueDetail: match.league ? {
+      name: match.league.name,
+      shortCode: match.league.short_code,
+      imagePath: match.league.image_path,
+    } : undefined,
+    venue: match.venue ? {
+      name: match.venue.name,
+      city: match.venue.city,
+      capacity: match.venue.capacity,
+      surface: match.venue.surface,
+      imagePath: match.venue.image_path,
+    } : undefined,
     events: events.map((event) => ({
       id: String(event.id || `${match.match_id || match.id}-${safeNumber(event.minute)}-${event.type || "event"}`),
       minute: safeNumber(event.minute),
       team: event.team || "Unknown",
       type: event.type || "event",
       commentary: event.commentary || event.description || "Live event",
+      playerName: event.playerName,
+      playerImage: event.playerImage,
+      result: event.result,
     })),
   };
 }

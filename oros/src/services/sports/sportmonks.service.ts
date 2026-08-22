@@ -10,6 +10,8 @@ export class SportmonksService implements SportsProvider {
   readonly name = "sportmonks";
   private client: AxiosInstance;
   private lastEventIds: Map<string, number> = new Map();
+  private pendingDetailRequests = new Map<string, Promise<any>>();
+  private cachedEvents = new Map<string, MatchEvent[]>();
 
   constructor() {
     this.client = axios.create({
@@ -18,15 +20,29 @@ export class SportmonksService implements SportsProvider {
     });
   }
 
-  private async fetchJson<T>(path: string): Promise<T> {
+  private async fetchJson<T>(path: string, customInclude?: string): Promise<T> {
     try {
-      const url = `${path}?api_token=${env.sportsApiKey}&include=participants;scores;state`;
+      const includeParam = customInclude || "participants;scores;state";
+      const url = `${path}?api_token=${env.sportsApiKey}&include=${includeParam}`;
       const response = await this.client.get<{ data: T }>(url);
       return response.data.data;
     } catch (error) {
       console.error(`[SportmonksService] Error fetching ${path}:`, error);
       throw error;
     }
+  }
+
+  private getFixtureDetails(matchId: string): Promise<any> {
+    let promise = this.pendingDetailRequests.get(matchId);
+    if (!promise) {
+      promise = this.fetchJson<any>(
+        `/fixtures/${matchId}`,
+        "participants;scores;state;venue;league;events.player;events.type;events.period"
+      );
+      this.pendingDetailRequests.set(matchId, promise);
+      setTimeout(() => this.pendingDetailRequests.delete(matchId), 5000);
+    }
+    return promise;
   }
 
   async getLiveFixtures(): Promise<LiveFixture[]> {
@@ -75,7 +91,42 @@ export class SportmonksService implements SportsProvider {
         return null;
       }
 
-      const fixture = await this.fetchJson<any>(`/fixtures/${matchId}`);
+      const fixture = await this.getFixtureDetails(matchId);
+      if (!fixture) return null;
+
+      // Extract and cache transformed events
+      const rawEvents = fixture.events || [];
+      const participants = fixture.participants || [];
+      const homeParticipant = participants.find((p: any) => p.meta?.location === "home");
+      const awayParticipant = participants.find((p: any) => p.meta?.location === "away");
+      const homeTeamId = homeParticipant?.id;
+      const awayTeamId = awayParticipant?.id;
+
+      const transformedEvents = rawEvents.map((event: any) => {
+        const typeName = event.type?.name || event.type?.code || "Event";
+        const playerName = event.player_name || event.player?.name || "";
+        const playerImage = event.player?.image_path || undefined;
+        const result = event.result || undefined;
+        let teamName = "Unknown";
+        if (event.participant_id === homeTeamId) teamName = homeParticipant?.name || "Home";
+        else if (event.participant_id === awayTeamId) teamName = awayParticipant?.name || "Away";
+
+        return {
+          id: String(event.id),
+          match_id: matchId,
+          minute: event.minute || 0,
+          team: teamName,
+          type: typeName.toLowerCase(),
+          description: typeName,
+          commentary: `${playerName || "Match"}: ${event.info || typeName}${event.addition ? ` (${event.addition})` : ""}`,
+          playerName,
+          playerImage,
+          result
+        };
+      });
+
+      this.cachedEvents.set(matchId, transformedEvents);
+
       return this.transformMatchState(fixture);
     } catch (error) {
       console.error("[SportmonksService] getMatchState failed:", error);
@@ -89,18 +140,17 @@ export class SportmonksService implements SportsProvider {
         return [];
       }
 
-      const events = await this.fetchJson<any[]>(`/fixtures/${matchId}/events`);
-
-      // Track last event ID for deduplication
-      const lastId = this.lastEventIds.get(matchId) || 0;
-      const newEvents = events.filter((e) => !sinceEventId || parseInt(e.id) > parseInt(sinceEventId));
-
-      if (newEvents.length > 0) {
-        const maxId = Math.max(...newEvents.map((e) => parseInt(e.id)));
-        this.lastEventIds.set(matchId, maxId);
+      let events = this.cachedEvents.get(matchId);
+      if (!events) {
+        await this.getMatchState(matchId);
+        events = this.cachedEvents.get(matchId) || [];
       }
 
-      return newEvents.map((event) => this.transformEvent(event, matchId));
+      if (sinceEventId) {
+        return events.filter((e) => parseInt(e.id || "0") > parseInt(sinceEventId));
+      }
+
+      return events;
     } catch (error) {
       console.error("[SportmonksService] fetchNewEvents failed:", error);
       return [];
@@ -117,6 +167,12 @@ export class SportmonksService implements SportsProvider {
     const homeLogo = homeParticipant?.image_path || undefined;
     const awayLogo = awayParticipant?.image_path || undefined;
 
+    const scores = fixture.scores || [];
+    const homeScoreObj = scores.find((s: any) => s.description === "CURRENT" && s.score?.participant === "home");
+    const awayScoreObj = scores.find((s: any) => s.description === "CURRENT" && s.score?.participant === "away");
+    const homeScore = homeScoreObj?.score?.goals ?? 0;
+    const awayScore = awayScoreObj?.score?.goals ?? 0;
+
     return {
       id: String(fixture.id),
       home_team: homeTeam,
@@ -125,6 +181,9 @@ export class SportmonksService implements SportsProvider {
       away_logo: awayLogo,
       status: this.getStatusFromState(fixture.state_id),
       started_at: fixture.starting_at,
+      home_score: homeScore,
+      away_score: awayScore,
+      minute: this.getMinuteFromState(fixture.state_id),
     };
   }
 
@@ -139,8 +198,10 @@ export class SportmonksService implements SportsProvider {
     const awayLogo = awayParticipant?.image_path || undefined;
 
     const scores = fixture.scores || [];
-    const homeScore = scores.find((s: any) => s.description === "home")?.score || 0;
-    const awayScore = scores.find((s: any) => s.description === "away")?.score || 0;
+    const homeScoreObj = scores.find((s: any) => s.description === "CURRENT" && s.score?.participant === "home");
+    const awayScoreObj = scores.find((s: any) => s.description === "CURRENT" && s.score?.participant === "away");
+    const homeScore = homeScoreObj?.score?.goals ?? 0;
+    const awayScore = awayScoreObj?.score?.goals ?? 0;
 
     return {
       match_id: String(fixture.id),
@@ -153,6 +214,18 @@ export class SportmonksService implements SportsProvider {
       home_score: homeScore,
       away_score: awayScore,
       started_at: fixture.starting_at,
+      venue: fixture.venue ? {
+        name: fixture.venue.name,
+        city: fixture.venue.city_name || "",
+        capacity: fixture.venue.capacity,
+        surface: fixture.venue.surface,
+        image_path: fixture.venue.image_path || undefined
+      } : undefined,
+      league: fixture.league ? {
+        name: fixture.league.name,
+        short_code: fixture.league.short_code || undefined,
+        image_path: fixture.league.image_path || undefined
+      } : undefined,
     };
   }
 

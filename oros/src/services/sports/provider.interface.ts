@@ -11,6 +11,9 @@ export interface LiveFixture {
   away_logo?: string;
   status: "scheduled" | "live" | "finished";
   started_at?: string;
+  home_score?: number;
+  away_score?: number;
+  minute?: number | null;
 }
 
 export interface MatchState {
@@ -24,6 +27,18 @@ export interface MatchState {
   home_score: number;
   away_score: number;
   started_at?: string;
+  venue?: {
+    name: string;
+    city: string;
+    capacity: number;
+    surface: string;
+    image_path?: string;
+  };
+  league?: {
+    name: string;
+    short_code?: string;
+    image_path?: string;
+  };
 }
 
 export interface MatchEvent {
@@ -34,6 +49,9 @@ export interface MatchEvent {
   type: string;
   description?: string;
   commentary?: string;
+  playerName?: string;
+  playerImage?: string;
+  result?: string;
 }
 
 export interface SportsProvider {

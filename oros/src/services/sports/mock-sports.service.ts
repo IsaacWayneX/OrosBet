@@ -44,6 +44,9 @@ export class MockSportsService implements SportsProvider {
         away_logo: "https://images.unsplash.com/photo-1540747737956-37870304797a?w=100&h=100&fit=crop",
         status: "live",
         started_at: new Date(Date.now() - 68 * 60 * 1000).toISOString(),
+        home_score: 1,
+        away_score: 1,
+        minute: 68,
       },
     ];
   }
@@ -58,6 +61,9 @@ export class MockSportsService implements SportsProvider {
         away_logo: "https://images.unsplash.com/photo-1540747737956-37870304797a?w=100&h=100&fit=crop",
         status: "scheduled",
         started_at: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+        home_score: 0,
+        away_score: 0,
+        minute: null,
       },
       {
         id: "mock-bayern-psg",
@@ -67,6 +73,9 @@ export class MockSportsService implements SportsProvider {
         away_logo: "https://images.unsplash.com/photo-1540747737956-37870304797a?w=100&h=100&fit=crop",
         status: "scheduled",
         started_at: new Date(Date.now() + 5 * 60 * 60 * 1000).toISOString(),
+        home_score: 0,
+        away_score: 0,
+        minute: null,
       },
     ];
   }

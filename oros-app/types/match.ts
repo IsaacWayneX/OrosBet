@@ -4,6 +4,9 @@ export interface MatchEvent {
   team: string;
   type: string;
   commentary: string;
+  playerName?: string;
+  playerImage?: string;
+  result?: string;
 }
 
 export interface Match {
@@ -18,5 +21,17 @@ export interface Match {
   awayScore: number;
   minute?: number | null;
   league?: string;
+  leagueDetail?: {
+    name: string;
+    shortCode?: string;
+    imagePath?: string;
+  };
+  venue?: {
+    name: string;
+    city: string;
+    capacity: number;
+    surface: string;
+    imagePath?: string;
+  };
   events?: MatchEvent[];
 }
