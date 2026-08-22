@@ -19,16 +19,16 @@ FAUCET STATUS
 DEPLOYMENT PROGRESS
 ================================================================================
 
-[ ] Step 1: Open Remix IDE - https://remix.ethereum.org
-[ ] Step 2: Create OrosUSD.sol
-[ ] Step 3: Create OrosMarket.sol
-[ ] Step 4: Compile OrosUSD.sol
-[ ] Step 5: Compile OrosMarket.sol
-[ ] Step 6: Deploy OrosUSD to Monad
-[ ] Step 7: Mint 1000 OUSD tokens
-[ ] Step 8: Deploy OrosMarket to Monad
-[ ] Step 9: Verify on BlockScout
-[ ] Step 10: Update backend .env with addresses
+[x] Step 1: Open Remix IDE - (Alternative: Compiled locally via Node compile.js)
+[x] Step 2: Create OrosUSD.sol
+[x] Step 3: Create OrosMarket.sol
+[x] Step 4: Compile OrosUSD.sol
+[x] Step 5: Compile OrosMarket.sol
+[x] Step 6: Deploy OrosUSD to Monad
+[x] Step 7: Mint 1000 OUSD tokens
+[x] Step 8: Deploy OrosMarket to Monad
+[x] Step 9: Verify on BlockScout
+[x] Step 10: Update backend .env with addresses
 [ ] Step 11: Start backend server
 [ ] Step 12: Test API endpoints
 
@@ -37,22 +37,22 @@ DEPLOYMENT CHECKLIST
 ================================================================================
 
 Before Remix:
-[ ] MetaMask installed
-[ ] Monad Testnet network added
-[ ] Wallet funded with MON
-[ ] Private key saved
+[x] MetaMask installed
+[x] Monad Testnet network added
+[x] Wallet funded with MON
+[x] Private key saved
 
 During Remix:
-[ ] OrosUSD.sol created and compiled
-[ ] OrosMarket.sol created and compiled
-[ ] Both contracts deployed
-[ ] 1000 OUSD minted to wallet
+[x] OrosUSD.sol created and compiled
+[x] OrosMarket.sol created and compiled
+[x] Both contracts deployed
+[x] 1000 OUSD minted to wallet
 
 After Deployment:
-[ ] OrosUSD address recorded
-[ ] OrosMarket address recorded
-[ ] Both verified on block explorer
-[ ] Backend .env updated
+[x] OrosUSD address recorded
+[x] OrosMarket address recorded
+[x] Both verified on block explorer
+[x] Backend .env updated
 [ ] Backend started successfully
 
 ================================================================================
@@ -60,29 +60,25 @@ CONTRACT ADDRESSES (TO BE FILLED)
 ================================================================================
 
 OrosUSD Token
-Address: [PENDING DEPLOYMENT]
-Transaction Hash: [PENDING]
-Block: [PENDING]
-Status: [ ] Not Deployed [ ] Deployed [ ] Verified
+Address: 0x7526632399d62Bd2d9b0Bca4A1513870634Df286
+Status: [ ] Not Deployed [x] Deployed [x] Verified
 
 OrosMarket
-Address: [PENDING DEPLOYMENT]
-Transaction Hash: [PENDING]
-Block: [PENDING]
-Status: [ ] Not Deployed [ ] Deployed [ ] Verified
+Address: 0x9B15E03dff92aeCbEe93E03505b8C8932e2A6A87
+Status: [ ] Not Deployed [x] Deployed [x] Verified
 
 ================================================================================
 BACKEND CONFIGURATION (TO BE FILLED)
 ================================================================================
 
 Current Status:
-OROS_TOKEN_ADDRESS=0x
-OROS_MARKET_ADDRESS=0x
+OROS_TOKEN_ADDRESS=0x7526632399d62Bd2d9b0Bca4A1513870634Df286
+OROS_MARKET_ADDRESS=0x9B15E03dff92aeCbEe93E03505b8C8932e2A6A87
 RESOLVER_PRIVATE_KEY=c0b1926e088fc7ed90a1878f84a75fb92c5b9cc699f377a7751f51e72f97b6a3
 
 After Deployment (update to):
-OROS_TOKEN_ADDRESS=0x[TOKEN_ADDRESS]
-OROS_MARKET_ADDRESS=0x[MARKET_ADDRESS]
+OROS_TOKEN_ADDRESS=0x7526632399d62Bd2d9b0Bca4A1513870634Df286
+OROS_MARKET_ADDRESS=0x9B15E03dff92aeCbEe93E03505b8C8932e2A6A87
 RESOLVER_PRIVATE_KEY=c0b1926e088fc7ed90a1878f84a75fb92c5b9cc699f377a7751f51e72f97b6a3
 
 ================================================================================

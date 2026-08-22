@@ -8,8 +8,9 @@
     "compile": "solc --optimize --bin --abi src/OrosUSD.sol src/OrosMarket.sol"
   },
   "dependencies": {
-    "ethers": "^6.11.1",
-    "dotenv": "^16.3.1"
+    "@openzeppelin/contracts": "^4.9.3",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.11.1"
   },
   "devDependencies": {
     "solc": "^0.8.20"

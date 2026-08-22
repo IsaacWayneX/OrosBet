@@ -41,28 +41,28 @@ contract OrosMarket is Ownable, ReentrancyGuard {
 
     // Events
     event MarketCreated(
-        indexed uint256 marketId,
+        uint256 indexed marketId,
         string description,
         string[] outcomes,
         uint256 resolutionDeadline
     );
     event SharesBought(
-        indexed uint256 marketId,
-        indexed uint256 outcome,
+        uint256 indexed marketId,
+        uint256 indexed outcome,
         address indexed buyer,
         uint256 amount,
         uint256 sharesReceived
     );
     event SharesSold(
-        indexed uint256 marketId,
-        indexed uint256 outcome,
+        uint256 indexed marketId,
+        uint256 indexed outcome,
         address indexed seller,
         uint256 shares,
         uint256 tokensReceived
     );
-    event MarketResolved(indexed uint256 marketId, uint256 correctOutcome);
+    event MarketResolved(uint256 indexed marketId, uint256 correctOutcome);
     event WinningsClaimed(
-        indexed uint256 marketId,
+        uint256 indexed marketId,
         address indexed winner,
         uint256 amount
     );
