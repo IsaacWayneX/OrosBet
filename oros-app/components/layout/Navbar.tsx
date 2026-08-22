@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { APP_NAME } from "@/lib/constants";
-import { formatCurrency } from "@/lib/utils";
 import { useWallet } from "@/hooks/useWallet";
+import { ChevronDown, Search, Menu, Bell, User } from "lucide-react";
 
 export function Navbar() {
   const wallet = useWallet();
@@ -14,8 +14,9 @@ export function Navbar() {
         
         {/* Left: Logo/Home */}
         <div className="flex items-center gap-4">
-          <Link href="/" className="flex h-10 items-center justify-center rounded px-2 text-lg font-bold tracking-tight text-foreground transition hover:opacity-80">
-            {APP_NAME.toUpperCase()}
+          <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight text-foreground transition hover:opacity-80">
+            <img src="/oros.png" alt="Oros Logo" className="h-6 w-auto brightness-0 invert" />
+            <span className="text-[17px] tracking-[0.5px] uppercase">{APP_NAME}</span>
           </Link>
         </div>
 
@@ -27,12 +28,10 @@ export function Navbar() {
               <span className="text-[15px] font-semibold text-foreground">
                 {wallet.connected ? wallet.balance.toFixed(8) : "0.00000000"}
               </span>
-              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#26A17B]">
-                <div className="h-2.5 w-2.5 rounded-full bg-white shadow-sm" />
+              <div className="flex h-5 w-5 items-center justify-center rounded-full overflow-hidden bg-white/10">
+                <img src="/oros.png" alt="Oros Coin" className="h-4 w-4 object-contain" />
               </div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                <path d="m6 9 6 6 6-9"/>
-              </svg>
+              <ChevronDown size={14} className="text-white stroke-[3px]" />
             </button>
 
             {/* Wallet Button */}
@@ -49,30 +48,22 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           {/* Search */}
           <button className="flex h-11 w-11 items-center justify-center rounded hover:bg-white/5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
-            </svg>
+            <Search size={20} className="text-muted stroke-[2.5px]" />
           </button>
           
-          {/* Dropdown 1 */}
+          {/* Menu */}
           <button className="flex h-11 w-11 items-center justify-center rounded hover:bg-white/5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted">
-              <path d="M3 12h18M3 6h18M3 18h18"/>
-            </svg>
+            <Menu size={20} className="text-muted stroke-[2.5px]" />
           </button>
 
           {/* Notifications */}
           <Link href="/notifications" className="flex h-11 w-11 items-center justify-center rounded hover:bg-white/5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted">
-              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
-            </svg>
+            <Bell size={20} className="text-muted stroke-[2.5px]" />
           </Link>
 
           {/* User Profile */}
           <button className="flex h-11 w-11 items-center justify-center rounded hover:bg-white/5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted">
-              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-            </svg>
+            <User size={20} className="text-muted stroke-[2.5px]" />
           </button>
         </div>
 
