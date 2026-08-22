@@ -23,3 +23,5 @@ contracts/compile.js
 .DS_Store
 .vscode/
 .idea/
+AGENTS.md
+CLAUDE.md

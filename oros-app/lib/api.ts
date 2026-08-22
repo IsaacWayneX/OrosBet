@@ -93,7 +93,9 @@ function normalizeFixture(fixture: any): Match {
   return {
     id: String(fixture.id),
     homeTeam: fixture.home_team || "Home",
+    homeLogo: fixture.home_logo,
     awayTeam: fixture.away_team || "Away",
+    awayLogo: fixture.away_logo,
     status: fixture.status || "scheduled",
     startedAt: fixture.started_at,
     homeScore: safeNumber(fixture.home_score),
@@ -107,7 +109,9 @@ function normalizeMatchDetail(match: any, events: any[] = []): Match {
   return {
     id: String(match.match_id || match.id),
     homeTeam: match.home_team || "Home",
+    homeLogo: match.home_logo,
     awayTeam: match.away_team || "Away",
+    awayLogo: match.away_logo,
     status: match.status || "scheduled",
     startedAt: match.started_at,
     homeScore: safeNumber(match.home_score),

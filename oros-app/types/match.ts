@@ -9,7 +9,9 @@ export interface MatchEvent {
 export interface Match {
   id: string;
   homeTeam: string;
+  homeLogo?: string;
   awayTeam: string;
+  awayLogo?: string;
   status: "scheduled" | "live" | "finished";
   startedAt?: string;
   homeScore: number;

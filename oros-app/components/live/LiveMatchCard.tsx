@@ -38,15 +38,27 @@ export function LiveMatchCard({ match, className }: LiveMatchCardProps) {
 
         {/* Teams Display */}
         <Link href={`/matches/${match.id}`} className="flex items-center justify-between group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/10 bg-gradient-to-b from-[#ECF3F9] to-[#BBCADA]">
-             <span className="text-[10px] font-bold text-slate-800">{match.homeTeam.slice(0,2).toUpperCase()}</span>
+          <div className="flex h-9 w-9 items-center justify-center">
+             {match.homeLogo ? (
+               <img src={match.homeLogo} alt={match.homeTeam} className="h-full w-full object-contain" />
+             ) : (
+               <div className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/10 bg-gradient-to-b from-[#ECF3F9] to-[#BBCADA]">
+                 <span className="text-[10px] font-bold text-slate-800">{match.homeTeam.slice(0,2).toUpperCase()}</span>
+               </div>
+             )}
           </div>
           <div className="flex flex-col items-center">
              <span className="text-[15.6px] font-semibold text-foreground group-hover:text-accent-secondary transition-colors">{match.homeTeam}</span>
              <span className="text-[15px] font-semibold text-foreground group-hover:text-accent-secondary transition-colors">{match.awayTeam}</span>
           </div>
-          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/10 bg-gradient-to-b from-[#ECF3F9] to-[#BBCADA]">
-             <span className="text-[10px] font-bold text-slate-800">{match.awayTeam.slice(0,2).toUpperCase()}</span>
+          <div className="flex h-9 w-9 items-center justify-center">
+             {match.awayLogo ? (
+               <img src={match.awayLogo} alt={match.awayTeam} className="h-full w-full object-contain" />
+             ) : (
+               <div className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/10 bg-gradient-to-b from-[#ECF3F9] to-[#BBCADA]">
+                 <span className="text-[10px] font-bold text-slate-800">{match.awayTeam.slice(0,2).toUpperCase()}</span>
+               </div>
+             )}
           </div>
         </Link>
       </div>
