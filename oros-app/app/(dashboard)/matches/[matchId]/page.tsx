@@ -1,6 +1,7 @@
 import { EventTimeline } from "@/components/live/EventTimeline";
 import { MatchHeader } from "@/components/live/MatchHeader";
 import { MarketList } from "@/components/markets/MarketList";
+import { LiveInteractiveMarkets } from "@/components/markets/LiveInteractiveMarkets";
 import { Card } from "@/components/ui/Card";
 import { getMarket, getMarkets, getMatch } from "@/lib/api";
 
@@ -18,6 +19,9 @@ export default async function MatchDetailPage({ params }: { params: Promise<{ ma
       <Card>
         <MatchHeader match={match} />
       </Card>
+      
+      <LiveInteractiveMarkets matchId={matchId} homeTeam={match.homeTeam} awayTeam={match.awayTeam} />
+
       <section className="space-y-4">
         <h2 className="text-xl font-semibold">Live markets</h2>
         <MarketList markets={markets} />
