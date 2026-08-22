@@ -45,7 +45,7 @@ export const placeBet = async (req: Request, res: Response) => {
     const txHash = await blockchainService.placeBet(
       parseInt(marketId),
       outcomeId,
-      amount,
+      amount,  // Pass as string, service will convert to BigInt
       userAddress
     );
 

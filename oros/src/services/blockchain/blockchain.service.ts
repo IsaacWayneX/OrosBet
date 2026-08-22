@@ -1,4 +1,4 @@
-import { createPublicClient, createWalletClient, http, publicActions, walletActions } from "viem";
+import { createPublicClient, createWalletClient, http, publicActions, walletActions, privateKeyToAccount } from "viem";
 import { env } from "../../config/env.js";
 import { OROS_TOKEN_ABI, OROS_MARKET_ABI } from "./abis.js";
 
@@ -9,6 +9,7 @@ import { OROS_TOKEN_ABI, OROS_MARKET_ABI } from "./abis.js";
 export class BlockchainService {
   private publicClient: ReturnType<typeof createPublicClient>;
   private walletClient: ReturnType<typeof createWalletClient>;
+  private account: ReturnType<typeof privateKeyToAccount> | null = null;
 
   constructor() {
     // Public client for reads
@@ -16,10 +17,15 @@ export class BlockchainService {
       transport: http(env.monadRpcUrl),
     });
 
-    // Wallet client for writes (if private key available)
+    // Wallet client for writes
     this.walletClient = createWalletClient({
       transport: http(env.monadRpcUrl),
     }).extend(publicActions);
+
+    // Initialize resolver account if private key is available
+    if (env.resolverPrivateKey) {
+      this.account = privateKeyToAccount(env.resolverPrivateKey as `0x${string}`);
+    }
   }
 
   /**
@@ -88,24 +94,47 @@ export class BlockchainService {
   /**
    * Place a bet on an outcome
    */
-  async placeBet(marketId: number, outcomeId: number, amount: bigint) {
+  async placeBet(marketId: number, outcomeId: number, amount: string, userAddress: string) {
     try {
-      if (!env.orosMarketAddress || !env.orosTokenAddress) {
-        console.error("[BlockchainService] Contract addresses not configured");
+      if (!env.orosMarketAddress || !env.orosTokenAddress || !this.account) {
+        console.error("[BlockchainService] Missing configuration for betting");
         return null;
       }
+
+      const amountBigInt = BigInt(amount);
 
       console.log("[BlockchainService] Placing bet:", {
         marketId,
         outcomeId,
-        amount: amount.toString(),
+        amount: amount,
+        userAddress,
       });
 
-      // TODO: Implement actual contract call
-      // 1. Approve token spending
-      // 2. Buy shares
+      // Step 1: Approve token spending
+      console.log("[BlockchainService] Approving token spending...");
+      const approveTx = await this.walletClient.writeContract({
+        account: this.account,
+        address: env.orosTokenAddress as `0x${string}`,
+        abi: OROS_TOKEN_ABI,
+        functionName: "approve",
+        args: [env.orosMarketAddress as `0x${string}`, amountBigInt],
+      });
 
-      return null;
+      console.log("[BlockchainService] Approve tx:", approveTx);
+
+      // Step 2: Buy shares (place bet)
+      console.log("[BlockchainService] Buying shares...");
+      const buyTx = await this.walletClient.writeContract({
+        account: this.account,
+        address: env.orosMarketAddress as `0x${string}`,
+        abi: OROS_MARKET_ABI,
+        functionName: "buyShares",
+        args: [BigInt(marketId), BigInt(outcomeId), amountBigInt],
+      });
+
+      console.log("[BlockchainService] Buy shares tx:", buyTx);
+
+      return buyTx;
     } catch (error) {
       console.error("[BlockchainService] placeBet error:", error);
       throw error;
@@ -117,7 +146,7 @@ export class BlockchainService {
    */
   async sellShares(marketId: number, outcomeId: number, shares: bigint) {
     try {
-      if (!env.orosMarketAddress) {
+      if (!env.orosMarketAddress || !this.account) {
         console.error("[BlockchainService] OROS_MARKET_ADDRESS not configured");
         return null;
       }
@@ -128,9 +157,15 @@ export class BlockchainService {
         shares: shares.toString(),
       });
 
-      // TODO: Implement actual contract call
+      const tx = await this.walletClient.writeContract({
+        account: this.account,
+        address: env.orosMarketAddress as `0x${string}`,
+        abi: OROS_MARKET_ABI,
+        functionName: "sellShares",
+        args: [BigInt(marketId), BigInt(outcomeId), shares],
+      });
 
-      return null;
+      return tx;
     } catch (error) {
       console.error("[BlockchainService] sellShares error:", error);
       throw error;
@@ -142,7 +177,7 @@ export class BlockchainService {
    */
   async resolveMarket(marketId: number, correctOutcome: number) {
     try {
-      if (!env.orosMarketAddress || !env.resolverPrivateKey) {
+      if (!env.orosMarketAddress || !this.account) {
         console.error("[BlockchainService] Missing configuration for market resolution");
         return null;
       }
@@ -152,9 +187,15 @@ export class BlockchainService {
         correctOutcome,
       });
 
-      // TODO: Implement actual contract call with resolver account
+      const tx = await this.walletClient.writeContract({
+        account: this.account,
+        address: env.orosMarketAddress as `0x${string}`,
+        abi: OROS_MARKET_ABI,
+        functionName: "resolveMarket",
+        args: [BigInt(marketId), BigInt(correctOutcome)],
+      });
 
-      return null;
+      return tx;
     } catch (error) {
       console.error("[BlockchainService] resolveMarket error:", error);
       throw error;
@@ -166,16 +207,22 @@ export class BlockchainService {
    */
   async claimWinnings(marketId: number) {
     try {
-      if (!env.orosMarketAddress) {
+      if (!env.orosMarketAddress || !this.account) {
         console.error("[BlockchainService] OROS_MARKET_ADDRESS not configured");
         return null;
       }
 
       console.log("[BlockchainService] Claiming winnings:", { marketId });
 
-      // TODO: Implement actual contract call
+      const tx = await this.walletClient.writeContract({
+        account: this.account,
+        address: env.orosMarketAddress as `0x${string}`,
+        abi: OROS_MARKET_ABI,
+        functionName: "claimWinnings",
+        args: [BigInt(marketId)],
+      });
 
-      return null;
+      return tx;
     } catch (error) {
       console.error("[BlockchainService] claimWinnings error:", error);
       throw error;
