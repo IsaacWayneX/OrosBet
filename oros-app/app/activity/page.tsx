@@ -26,7 +26,7 @@ export default async function ActivityPage() {
               alt="Ronaldo" 
               className="w-96 h-96 object-contain mb-4"
             />
-            <p className="text-sm font-semibold">No live matches to bet on but heres a photo of ronaldo SUI!!!!!</p>
+            <p className="text-lg font-semibold">No live matches to bet on but heres a photo of ronaldo SUI!!!!!</p>
           </div>
         )}
       </section>
