@@ -78,15 +78,15 @@ export function LiveInteractiveMarkets({
       const amount = 10; // Default bet amount
       const price = outcome === "yes" ? market.outcomeYesPrice : market.outcomeNoPrice;
       
-      openActivity.startActivity("Placing Bet", `Betting ${amount} OUSD on ${outcome.toUpperCase()}...`);
+      activity.startActivity("Placing Bet", `Betting ${amount} OUSD on ${outcome.toUpperCase()}...`);
       
       // Simulate bet placement
       // In production, this would call a smart contract or backend API
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      openActivity.success();
+      activity.success();
     } catch (error) {
-      openActivity.error(error instanceof Error ? error.message : "Failed to place bet");
+      activity.error(error instanceof Error ? error.message : "Failed to place bet");
     }
   };
 
