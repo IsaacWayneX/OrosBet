@@ -21,8 +21,12 @@ export default async function ActivityPage() {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center p-12 text-center border border-border/40 rounded-lg bg-card text-muted md:col-span-2">
-            <p className="text-sm font-semibold">No live matches</p>
-            <p className="text-xs mt-1">Check back soon for live games.</p>
+            <img 
+              src="/empty/ronaldo.png" 
+              alt="Ronaldo" 
+              className="w-96 h-96 object-contain mb-4"
+            />
+            <p className="text-sm font-semibold">No live matches to bet on but heres a photo of ronaldo SUI!!!!!</p>
           </div>
         )}
       </section>
