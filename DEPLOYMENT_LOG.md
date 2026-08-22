@@ -29,8 +29,8 @@ DEPLOYMENT PROGRESS
 [x] Step 8: Deploy OrosMarket to Monad
 [x] Step 9: Verify on BlockScout
 [x] Step 10: Update backend .env with addresses
-[ ] Step 11: Start backend server
-[ ] Step 12: Test API endpoints
+[x] Step 11: Start backend server
+[x] Step 12: Test API endpoints
 
 ================================================================================
 DEPLOYMENT CHECKLIST
@@ -53,7 +53,7 @@ After Deployment:
 [x] OrosMarket address recorded
 [x] Both verified on block explorer
 [x] Backend .env updated
-[ ] Backend started successfully
+[x] Backend started successfully
 
 ================================================================================
 CONTRACT ADDRESSES (TO BE FILLED)
