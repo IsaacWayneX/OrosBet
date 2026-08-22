@@ -16,9 +16,9 @@ A real-time decentralized prediction market platform for sports betting using an
 
 ---
 
-Smart Contracts (Monad Testnet)
-OROS Token (OUSD): 0x7526632399d62Bd2d9b0Bca4A1513870634Df286
-OROS Market (AMM): 0x9B15E03dff92aeCbEe93E03505b8C8932e2A6A87
+## 📋 Smart Contracts (Monad Testnet)
+OROS Token (OUSD): https://testnet.monadvision.com/token/0x7526632399d62Bd2d9b0Bca4A1513870634Df286
+OROS Market (AMM): https://testnet.monadvision.com/address/0x9B15E03dff92aeCbEe93E03505b8C8932e2A6A87
 
 ## 🏗️ Architecture
 
