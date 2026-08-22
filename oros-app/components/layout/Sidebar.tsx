@@ -23,7 +23,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-[60px] hidden h-[calc(100vh-60px)] w-[260px] flex-col items-start bg-[#0E202D] shadow-[0_0_5px_rgba(25,25,25,0.25)] lg:flex">
+    <aside className="fixed left-0 top-[60px] hidden h-[calc(100vh-60px)] w-[260px] flex-col items-start bg-background-sidebar border-r border-border/40 shadow-[2px_0_5px_rgba(0,0,0,0.01)] lg:flex">
       
       {/* Top Toggle Switcher: Casino/Sports Style */}
       <div className="flex h-[60px] w-full items-center justify-center px-4">

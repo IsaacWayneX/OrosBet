@@ -1,6 +1,24 @@
 @import "tailwindcss";
 
 :root {
+  /* Cool Light Mode (Default) */
+  --background: #F3F7FA;
+  --background-sidebar: #FFFFFF;
+  --background-elevated: #FFFFFF;
+  --background-button: #EBF2F7;
+  --card: #FFFFFF;
+  --foreground: #0E202D;
+  --muted: #6C8CA3;
+  --border: #E2E8F0;
+  --accent: #1475E1;
+  --accent-secondary: #005FCE;
+  --danger: #CA0D3D;
+  --warning: #E38800;
+  --success: #26A17B;
+}
+
+.dark {
+  /* Sleek Dark Mode */
   --background: #172B39;
   --background-sidebar: #0E202D;
   --background-elevated: #0E202D;
@@ -18,17 +36,30 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-sidebar: var(--background-sidebar);
   --color-background-elevated: var(--background-elevated);
+  --color-background-button: var(--background-button);
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
+  --color-accent-secondary: var(--accent-secondary);
   --color-danger: var(--danger);
   --color-warning: var(--warning);
+  --color-success: var(--success);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+.logo-filter {
+  /* Light mode: mask Oros logo to Oros blue (#1475E1) */
+  filter: invert(36%) sepia(84%) saturate(2152%) hue-rotate(202deg) brightness(98%) contrast(93%);
+}
+
+.dark .logo-filter {
+  /* Dark mode: mask Oros logo to white */
+  filter: brightness(0) invert(1);
 }
 
 * {
