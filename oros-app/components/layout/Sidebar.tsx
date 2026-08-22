@@ -94,24 +94,6 @@ export function Sidebar() {
         </div>
       </div>
 
-      {/* Sidebar Footer: Odds and Language */}
-      <div className="w-full border-t border-[#3E586C]/30 px-4 py-4 space-y-2">
-        <button className="flex h-11 w-full items-center justify-between rounded-lg bg-[#172B39] px-4 text-[15.3px] font-semibold text-[#ECF3F9] transition hover:opacity-90">
-          <span>Odds: Decimal</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-[#A1BFD6]">
-            <path d="m6 9 6 6 6-9"/>
-          </svg>
-        </button>
-        <button className="flex h-11 w-full items-center justify-between rounded-lg bg-[#172B39] px-4 text-[15.1px] font-semibold text-[#ECF3F9] transition hover:opacity-90">
-          <div className="flex items-center gap-2">
-            <span className="text-lg leading-none">🌐</span>
-            <span>English</span>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-[#A1BFD6]">
-            <path d="m6 9 6 6 6-9"/>
-          </svg>
-        </button>
-      </div>
 
     </aside>
   );

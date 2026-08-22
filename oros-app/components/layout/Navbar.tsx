@@ -13,10 +13,9 @@ export function Navbar() {
       <div className="flex h-full w-full max-w-[1200px] items-center justify-between px-4 lg:px-6">
         
         {/* Left: Logo/Home */}
-        <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight text-foreground transition hover:opacity-80">
-            <img src="/oros.png" alt="Oros Logo" className="h-6 w-auto brightness-0 invert" />
-            <span className="text-[17px] tracking-[0.5px] uppercase">{APP_NAME}</span>
+        <div className="flex items-center">
+          <Link href="/" className="flex items-center transition hover:opacity-80">
+            <img src="/oros.png" alt="Oros Logo" className="h-9 w-auto brightness-0 invert" />
           </Link>
         </div>
 
