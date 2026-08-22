@@ -1,11 +1,14 @@
 import { LiveMatchCard } from "@/components/live/LiveMatchCard";
 import { getLiveMatches } from "@/lib/api";
+import { SportsHero } from "@/components/layout/SportsHero";
 
 export default async function ActivityPage() {
   const matches = await getLiveMatches();
 
   return (
     <div className="space-y-6">
+      <SportsHero />
+
       <section>
         <h1 className="text-3xl font-semibold tracking-tight">Live now</h1>
         <p className="mt-2 text-sm text-slate-400">Open access browsing with wallet actions layered in later.</p>

@@ -1,5 +1,6 @@
 import { LiveMatchCard } from "@/components/live/LiveMatchCard";
 import { getUpcomingMatches } from "@/lib/api";
+import { SportsHero } from "@/components/layout/SportsHero";
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -28,6 +29,8 @@ export default async function UpcomingPage({ searchParams }: PageProps) {
 
   return (
     <div className="space-y-6">
+      <SportsHero />
+
       <div>
         <h1 className="text-3xl font-semibold">Starting Soon</h1>
         <p className="mt-2 text-sm text-slate-400">Upcoming matches and events.</p>

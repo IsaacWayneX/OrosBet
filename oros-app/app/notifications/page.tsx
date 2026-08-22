@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/Card";
+import { SportsHero } from "@/components/layout/SportsHero";
 
 const activities = [
   { id: 1, label: "Bought YES on Arsenal next goal", status: "confirmed", time: "2m ago" },
@@ -8,6 +9,8 @@ const activities = [
 export default function NotificationsPage() {
   return (
     <div className="space-y-6">
+      <SportsHero />
+
       <div>
         <h1 className="text-3xl font-semibold">Activity</h1>
         <p className="mt-2 text-sm text-slate-400">Recent wallet and market actions.</p>

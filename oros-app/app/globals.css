@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  /* Cool Light Mode (Default) */
-  --background: #F3F7FA;
+  /* Light Mode (White Background) */
+  --background: #FFFFFF;
   --background-sidebar: #FFFFFF;
   --background-elevated: #FFFFFF;
-  --background-button: #EBF2F7;
+  --background-button: #F5F5F5;
   --card: #FFFFFF;
   --foreground: #000000;
-  --muted: #000000;
-  --border: #E2E8F0;
+  --muted: #666666;
+  --border: #E0E0E0;
   --accent: #1475E1;
   --accent-secondary: #005FCE;
   --danger: #CA0D3D;
